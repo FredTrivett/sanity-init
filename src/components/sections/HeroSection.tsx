@@ -48,6 +48,7 @@ export function HeroSection({
                                 {button.label}
                             </Link>
                         )}
+                        <p>test</p>
                     </div>
 
                     {/* Image */}
