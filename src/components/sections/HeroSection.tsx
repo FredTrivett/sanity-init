@@ -48,9 +48,6 @@ export function HeroSection({
                                 {button.label}
                             </Link>
                         )}
-                        <p className="mt-6 text-lg leading-relaxed text-neutral-600 dark:text-neutral-400">
-                            test
-                        </p>
                     </div>
 
                     {/* Image */}
