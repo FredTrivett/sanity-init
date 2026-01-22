@@ -25,7 +25,8 @@ export default defineConfig({
     // Presentation tool for Visual Editing
     presentationTool({
       previewUrl: {
-        origin: process.env.SANITY_STUDIO_PREVIEW_ORIGIN || 'http://localhost:3000',
+        // Use production URL for hosted Studio, localhost for local dev
+        origin: process.env.SANITY_STUDIO_PREVIEW_ORIGIN || 'https://sanity-page-builder.frederictrivett.workers.dev',
         preview: '/',
         previewMode: {
           enable: '/api/draft-mode/enable',
