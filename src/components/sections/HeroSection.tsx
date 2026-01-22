@@ -38,7 +38,7 @@ export function HeroSection({
                         }`}
                 >
                     {/* Content */}
-                    <div className="flex flex-1 flex-col items-start">
+                    <div className="flex flex-1 flex-col w-full items-start">
                         <HeadingTag className="text-4xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100 sm:text-5xl lg:text-6xl">
                             {title}
                         </HeadingTag>
