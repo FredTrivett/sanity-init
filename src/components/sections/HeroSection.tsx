@@ -14,6 +14,7 @@ interface HeroSectionProps {
         label?: string;
         link?: string;
     };
+    isFirst?: boolean;
 }
 
 export function HeroSection({
@@ -22,8 +23,12 @@ export function HeroSection({
     image,
     imagePosition = "right",
     button,
+    isFirst = false,
 }: HeroSectionProps) {
     const isImageLeft = imagePosition === "left";
+
+    // Use H1 for first section, H2 for subsequent sections
+    const HeadingTag = isFirst ? "h1" : "h2";
 
     return (
         <section className="">
@@ -34,9 +39,9 @@ export function HeroSection({
                 >
                     {/* Content */}
                     <div className="flex flex-1 flex-col items-start">
-                        <h1 className="text-4xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100 sm:text-5xl lg:text-6xl">
+                        <HeadingTag className="text-4xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100 sm:text-5xl lg:text-6xl">
                             {title}
-                        </h1>
+                        </HeadingTag>
                         <p className="mt-6 text-lg leading-relaxed text-neutral-600 dark:text-neutral-400">
                             {text}
                         </p>

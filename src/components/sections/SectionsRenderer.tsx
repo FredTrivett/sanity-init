@@ -33,9 +33,11 @@ export function SectionsRenderer({ sections }: SectionsRendererProps) {
 
     return (
         <>
-            {sections.map((section) => {
+            {sections.map((section, index) => {
                 // Use _key as the unique identifier (Sanity generates this for array items)
                 const key = section._key;
+                // Only the first section gets an H1, others get H2
+                const isFirst = index === 0;
 
                 switch (section._type) {
                     case "heroSection":
@@ -47,12 +49,13 @@ export function SectionsRenderer({ sections }: SectionsRendererProps) {
                                 image={section.image}
                                 imagePosition={section.imagePosition}
                                 button={section.button}
+                                isFirst={isFirst}
                             />
                         );
 
                     // Add more section types here:
                     // case "featuresSection":
-                    //   return <FeaturesSection key={key} {...section} />;
+                    //   return <FeaturesSection key={key} {...section} isFirst={isFirst} />;
 
                     default:
                         // Log unknown section types during development
