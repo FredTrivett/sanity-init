@@ -8,6 +8,7 @@ import { visionTool } from '@sanity/vision'
 import { defineConfig } from 'sanity'
 import { structureTool } from 'sanity/structure'
 import { presentationTool } from 'sanity/presentation'
+import { seoMetaFields } from 'sanity-plugin-seo'
 
 // Go to https://www.sanity.io/docs/api-versioning to learn how API versioning works
 import { apiVersion, dataset, projectId } from './src/sanity/env'
@@ -40,6 +41,8 @@ export default defineConfig({
         'http://localhost:*',
       ],
     }),
+    // SEO Meta Fields plugin
+    seoMetaFields(),
     // Vision is for querying with GROQ from inside the Studio
     // https://www.sanity.io/docs/the-vision-plugin
     visionTool({ defaultApiVersion: apiVersion }),

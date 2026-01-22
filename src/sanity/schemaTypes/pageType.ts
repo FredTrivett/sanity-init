@@ -36,37 +36,21 @@ export const pageType = defineType({
             type: 'array',
             group: 'content',
             of: [
-                // Add section types here - they will be reorderable via drag-and-drop
                 defineArrayMember({
                     type: 'heroSection',
                     title: 'Hero Section',
                 }),
-                // Future sections can be added here:
-                // defineArrayMember({ type: 'featuresSection' }),
-                // defineArrayMember({ type: 'ctaSection' }),
-                // defineArrayMember({ type: 'testimonialsSection' }),
             ],
             options: {
-                // Enables the drag handle for reordering
                 sortable: true,
             },
         }),
-        // SEO Fields
+        // SEO Fields - using the plugin
         defineField({
-            name: 'seoTitle',
-            title: 'SEO Title',
-            type: 'string',
+            name: 'seo',
+            title: 'SEO',
+            type: 'seoMetaFields',
             group: 'seo',
-            description: 'Override the page title for search engines',
-        }),
-        defineField({
-            name: 'seoDescription',
-            title: 'SEO Description',
-            type: 'text',
-            rows: 3,
-            group: 'seo',
-            description: 'Description shown in search results (recommended: 150-160 characters)',
-            validation: (rule) => rule.max(160).warning('Keep under 160 characters for best SEO results'),
         }),
     ],
     preview: {

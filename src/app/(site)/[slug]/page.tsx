@@ -9,7 +9,7 @@ interface PageProps {
     params: Promise<{ slug: string }>;
 }
 
-// Generate metadata for SEO - use regular client to avoid draftMode() during build
+// Generate metadata for SEO
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
     const { slug } = await params;
     const page = await client.fetch(PAGE_QUERY, { slug });
@@ -18,13 +18,31 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         return {};
     }
 
+    const seo = page.seo;
+    const title = seo?.metaTitle || page.title;
+    const description = seo?.metaDescription || "";
+
     return {
-        title: page.seoTitle || page.title,
-        description: page.seoDescription,
+        title,
+        description,
+        keywords: seo?.seoKeywords?.join(", "),
+        robots: seo?.nofollowAttributes ? "noindex, nofollow" : undefined,
+        openGraph: seo?.openGraph ? {
+            title: seo.openGraph.title || title,
+            description: seo.openGraph.description || description,
+            siteName: seo.openGraph.siteName,
+            url: seo.openGraph.url,
+            images: seo.openGraph.image?.asset?.url ? [{ url: seo.openGraph.image.asset.url }] : undefined,
+        } : undefined,
+        twitter: seo?.twitter ? {
+            card: seo.twitter.cardType as "summary" | "summary_large_image" | "app" | "player" || "summary_large_image",
+            site: seo.twitter.site,
+            creator: seo.twitter.creator,
+        } : undefined,
     };
 }
 
-// Generate static paths for all pages - use regular client to avoid draftMode() during build
+// Generate static paths for all pages
 export async function generateStaticParams() {
     const pages = await client.fetch(PAGES_QUERY);
 

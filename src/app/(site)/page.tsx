@@ -1,7 +1,43 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { sanityFetch } from "@/sanity/lib/live";
+import { client } from "@/sanity/lib/client";
 import { PAGE_QUERY } from "@/sanity/lib/queries";
 import { SectionsRenderer } from "@/components/sections/SectionsRenderer";
+
+// Generate metadata for SEO
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await client.fetch(PAGE_QUERY, { slug: "home" });
+
+  if (!page) {
+    return {
+      title: "Home",
+    };
+  }
+
+  const seo = page.seo;
+  const title = seo?.metaTitle || page.title || "Home";
+  const description = seo?.metaDescription || "";
+
+  return {
+    title,
+    description,
+    keywords: seo?.seoKeywords?.join(", "),
+    robots: seo?.nofollowAttributes ? "noindex, nofollow" : undefined,
+    openGraph: seo?.openGraph ? {
+      title: seo.openGraph.title || title,
+      description: seo.openGraph.description || description,
+      siteName: seo.openGraph.siteName,
+      url: seo.openGraph.url,
+      images: seo.openGraph.image?.asset?.url ? [{ url: seo.openGraph.image.asset.url }] : undefined,
+    } : undefined,
+    twitter: seo?.twitter ? {
+      card: seo.twitter.cardType as "summary" | "summary_large_image" | "app" | "player" || "summary_large_image",
+      site: seo.twitter.site,
+      creator: seo.twitter.creator,
+    } : undefined,
+  };
+}
 
 export default async function Home() {
   // Fetch the page with slug "home"
