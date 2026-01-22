@@ -14,6 +14,9 @@ import { apiVersion, dataset, projectId } from './src/sanity/env'
 import { schema } from './src/sanity/schemaTypes'
 import { structure } from './src/sanity/structure'
 
+// Frontend URL - change this to your production URL
+const FRONTEND_URL = 'https://sanity-page-builder.frederictrivett.workers.dev'
+
 export default defineConfig({
   basePath: '/studio',
   projectId,
@@ -25,13 +28,17 @@ export default defineConfig({
     // Presentation tool for Visual Editing
     presentationTool({
       previewUrl: {
-        // Use production URL for hosted Studio, localhost for local dev
-        origin: process.env.SANITY_STUDIO_PREVIEW_ORIGIN || 'https://sanity-page-builder.frederictrivett.workers.dev',
-        preview: '/',
+        initial: FRONTEND_URL,
         previewMode: {
           enable: '/api/draft-mode/enable',
         },
       },
+      // Allow these origins to connect to the Studio
+      allowOrigins: [
+        FRONTEND_URL,
+        'http://localhost:3000',
+        'http://localhost:*',
+      ],
     }),
     // Vision is for querying with GROQ from inside the Studio
     // https://www.sanity.io/docs/the-vision-plugin
